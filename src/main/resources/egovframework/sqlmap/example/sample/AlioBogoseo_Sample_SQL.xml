@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AlioBogoseo">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+
+<!-- 보고서 -->
+	<resultMap id="alioBogoseo" class="egovframework.example.sample.service.AlioBogoseoVO">
+	    <result property="bogoseo_id" column="bogoseo_id"/>
+		<result property="title" column="title"/>
+		<result property="company_name" column="company_name"/>
+		<result property="publish_date" column="publish_date"/>
+		<result property="description" column="description"/>
+		<result property="original_url" column="original_url"/>
+		<result property="atchFileId" column="atch_file_id"/>
+	</resultMap>
+	
+	<!-- local -->
+	
+	    <!-- <select id="alioBogoseoDAO.selectAlioBogoseoList" parameterClass="searchVO" resultClass="egovMap">
+         
+       SELECT A.BOGOSEO_ID, A.TITLE, A.COMPANY_NAME, A.PUBLISH_DATE, A.DESCRIPTION, A.ATTACHED_FILE, A.ORIGINAL_URL
+          FROM (
+             SELECT ROWNUM RNUM, S.*
+             FROM (
+                SELECT
+                  BOGOSEO_ID, TITLE, COMPANY_NAME, PUBLISH_DATE, DESCRIPTION, ATTACHED_FILE, ORIGINAL_URL
+               FROM BOGOSEO
+               WHERE 1=1
+               <isEqual prepend="AND" property="searchCondition" compareValue="0">
+                  COMPANY_NAME LIKE '%' || #searchKeyword# || '%'
+               </isEqual>
+               <isEqual prepend="AND" property="searchCondition" compareValue="1">
+                   TITLE LIKE '%' || #searchKeyword# || '%'
+               </isEqual>
+               ORDER BY TITLE DESC
+            ) S   
+         ) A
+         
+
+   </select>
+   
+   <select id="alioBogoseoDAO.selectAlioBogoseoListTotCnt" parameterClass="searchVO" resultClass="int">
+
+         SELECT COUNT(*) totcnt
+         FROM BOGOSEO
+         
+         WHERE 1=1
+         <isEqual prepend="AND" property="searchCondition" compareValue="0">
+            COMPANY_NAME LIKE '%' || #searchKeyword# || '%'
+         </isEqual>
+         <isEqual prepend="AND" property="searchCondition" compareValue="1">
+            TITLE LIKE '%' || #searchKeyword# || '%'
+         </isEqual>
+      
+   </select>  -->
+   
+   <!-- 글 조회 -->
+
+    
+    <!-- <select id="alioBogoseoDAO.selectAlioBogoseoView" resultMap="alioBogoseo">
+            SELECT
+                BOGOSEO_ID, TITLE, COMPANY_NAME, PUBLISH_DATE, DESCRIPTION, ATTACHED_FILE, ORIGINAL_URL
+            FROM BOGOSEO 
+            WHERE BOGOSEO_ID=#bogoseo_id#
+    </select>  -->
+    
+   
+   <!-- 글 삽입 -->
+   <insert id="alioBogoseoDAO.insertSample">
+       
+		<![CDATA[
+			INSERT INTO BOGOSEO 
+				(   TITLE
+					, COMPANY_NAME
+					, PUBLISH_DATE
+					, DESCRIPTION
+					, ORIGINAL_URL
+					, ATCH_FILE_ID)
+					
+			VALUES ( #title#
+				  , #company_name#
+				  , #publish_date#
+				  , #description#
+				  , #original_url#
+				  , #atchFileId#)
+				  
+
+		]]>
+	</insert>
+	
+   <!-- 글 수정 -->
+   <update id="alioBogoseoDAO.updateSample">
+		<![CDATA[
+			UPDATE BOGOSEO
+			SET     BOGOSEO_ID=#bogoseo_id#
+					, TITLE=#title#
+					, COMPANY_NAME= #company_name#
+					, PUBLISH_DATE=#publish_date#
+					, DESCRIPTION = #description# 
+					, ORIGINAL_URL=#original_url#
+					, ATCH_FILE_ID=#atchFileId#
+					
+					
+			WHERE BOGOSEO_ID=#bogoseo_id#
+		]]>
+	</update>
+	
+   <!-- 글 삭제 -->
+    <delete id="alioBogoseoDAO.deleteSample">
+		<![CDATA[
+			DELETE FROM BOGOSEO 
+			WHERE BOGOSEO_ID=#bogoseo_id#
+		]]>
+	</delete>
+    
+	<!-- cafe24 SQL -->
+	
+ 	 <select id="alioBogoseoDAO.selectAlioBogoseoList" parameterClass="searchVO" resultClass="egovMap">
+			
+    
+	     SELECT BOGOSEO_ID, TITLE, COMPANY_NAME, PUBLISH_DATE, DESCRIPTION, ORIGINAL_URL			
+ 			FROM BOGOSEO	
+ 					
+ 			WHERE 1=1
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+					COMPANY_NAME LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+					 TITLE LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>		
+			ORDER BY TITLE DESC 			
+			
+
+	</select>
+	
+	<select id="alioBogoseoDAO.selectAlioBogoseoListTotCnt" parameterClass="searchVO" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM BOGOSEO
+			
+			WHERE 1=1
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				COMPANY_NAME LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				TITLE LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+		
+	</select>
+	
+	<!-- 글 조회 -->
+    
+	<select id="alioBogoseoDAO.selectAlioBogoseoView" resultMap="alioBogoseo">
+            SELECT
+                BOGOSEO_ID, TITLE, COMPANY_NAME, PUBLISH_DATE, DESCRIPTION, ORIGINAL_URL, ATCH_FILE_ID
+            FROM BOGOSEO 
+            WHERE BOGOSEO_ID=#bogoseo_id#
+    </select> 
+    
+	
+</sqlMap>

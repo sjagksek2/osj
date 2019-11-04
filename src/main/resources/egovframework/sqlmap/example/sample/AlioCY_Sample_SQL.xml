@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AlioCY">
+    
+    <typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+    
+    <resultMap id="aliocy" class="egovframework.example.sample.service.AlioCYVO">
+		<result property="cy_id" column="cy_id"/>
+		<result property="cy_ne" column="cy_ne"/>
+		<result property="cy_ny" column="cy_ny"/>
+		<result property="cy_nj" column="cy_nj"/>
+		<result property="cy_njm" column="cy_njm"/>
+	</resultMap>
+	
+    <!-- local -->
+    
+ <!--        <select id="alioCYDAO.selectAlioCYList" parameterClass="searchVO" resultClass="egovMap">
+            SELECT A.CY_ID,
+                    A.CY_NE,
+                    A.CY_NY,
+                    A.CY_NJ,
+                    A.CY_NJM  
+          FROM (
+             SELECT ROWNUM RNUM, S.*
+             FROM (
+                SELECT
+                  CY_ID, CY_NE ,CY_NY, CY_NJ, CY_NJM
+                FROM CHAEYOUNG
+               WHERE 1=1
+               <isEqual prepend="AND" property="searchCondition" compareValue="0">
+                  CY_NY LIKE '%' || #searchKeyword# || '%'
+               </isEqual>
+               <isEqual prepend="AND" property="searchCondition" compareValue="1">
+                  CY_NE LIKE '%' || #searchKeyword# || '%'
+               </isEqual>
+               <isEqual prepend="AND" property="searchCondition" compareValue="2">
+                  #searchKeyword# BETWEEN CY_NJ AND CY_NJM
+               </isEqual>
+
+               ORDER BY CY_ID DESC
+            ) S   
+         ) A
+   </select>
+   
+   <select id="alioCYDAO.selectAlioCYTotCnt" parameterClass="searchVO" resultClass="int">
+
+         SELECT COUNT(*) totcnt
+         FROM CHAEYOUNG
+         
+         WHERE 1=1
+         <isEqual prepend="AND" property="searchCondition" compareValue="0">
+            CY_NY LIKE '%' || #searchKeyword# || '%'
+         </isEqual>
+         <isEqual prepend="AND" property="searchCondition" compareValue="1">
+            CY_NE LIKE '%' || #searchKeyword# || '%'
+         </isEqual>
+         <isEqual prepend="AND" property="searchCondition" compareValue="2">
+            #searchKeyword# BETWEEN CY_NJ AND CY_NJM
+         </isEqual>
+
+   </select>
+    
+   <select id="alioCYDAO.selectAlioCYView" resultMap="aliocy">
+           SELECT
+                CY_ID, CY_NE ,CY_NY, CY_NJ, CY_NJM
+            FROM CHAEYOUNG
+           WHERE CY_ID=#cy_id#
+    </select>  -->
+    
+   <!-- 글 삽입 -->
+   <insert id="alioCYDAO.insertSample">
+		<![CDATA[
+			INSERT INTO CHAEYOUNG
+				(     CY_NE,
+			   		  CY_NY,
+			   		  CY_NJ,
+			   		  CY_NJM)
+			VALUES (  #cy_ne#
+				  , #cy_ny#
+				  , #cy_nj#
+				  , #cy_njm#)
+		]]>
+	</insert>
+	
+   <!-- 글 수정 -->
+   <update id="alioCYDAO.updateSample">
+		<![CDATA[
+			UPDATE CHAEYOUNG
+			SET     CY_ID=#cy_id#
+				  , #cy_ne#
+				  , #cy_ny#
+				  , #cy_nj#
+				  , #cy_njm#
+			WHERE CY_ID=#cy_id#
+		]]>
+	</update>
+	
+   <!-- 글 삭제 -->
+    <delete id="alioCYDAO.deleteSample">
+		<![CDATA[
+			DELETE FROM CHAEYOUNG
+			WHERE CY_ID=#cy_id#
+		]]>
+	</delete>
+	
+    <!-- cafe24 -->
+    
+     <select id="alioCYDAO.selectAlioCYList" parameterClass="searchVO" resultClass="egovMap">
+			   SELECT CY_ID,
+			   		  CY_NE,
+			   		  CY_NY,
+			   		  CY_NJ,
+			   		  CY_NJM  
+			   		  
+			    FROM CHAEYOUNG
+			WHERE 1=1
+			
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				CY_NY LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				CY_NE LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="2">
+				#searchKeyword# BETWEEN CY_NJ AND CY_NJM
+				
+			</isEqual>
+			ORDER BY CY_ID DESC
+						
+	</select>
+	
+	<select id="alioCYDAO.selectAlioCYTotCnt" parameterClass="searchVO" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM CHAEYOUNG
+			
+			WHERE 1=1
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				CY_NY LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				CY_NE LIKE CONCAT('%',#searchKeyword#,'%')
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="2">
+				#searchKeyword# BETWEEN CY_NJ AND CY_NJM
+			</isEqual>
+
+	</select>
+    
+	<select id="alioCYDAO.selectAlioCYView" resultMap="aliocy">
+           SELECT
+                CY_ID, CY_NE ,CY_NY, CY_NJ, CY_NJM
+            FROM CHAEYOUNG
+        	WHERE CY_ID=#cy_id#
+    </select>  
+    
+</sqlMap>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Alio">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+
+	<resultMap id="alio" class="egovframework.example.sample.service.AlioVO">
+		<result property="statistics_code" column="statistics_code"/>
+		<result property="member_present_condition" column="member_present_condition"/>
+		<result property="executive_annual_income" column="executive_annual_income"/>
+		<result property="employee_pay" column="employee_pay"/>
+		<result property="finance_information" column="finance_information"/>
+		<result property="menu_code" column="menu_code"/>
+	</resultMap>
+	
+	<!-- 주요통계 -->
+	
+	<select id="alioTongGaeDAO.selectAlioTongGaeList" parameterClass="searchVO" resultClass="egovMap">
+			SELECT 
+					  STATISTICS_CODE
+					, MEMBER_PRESENT_CONDITION
+					, EXECUTIVE_ANNUAL_INCOME
+					, EMPLOYEE_PAY
+					, FINANCE_INFORMATION
+					, MENU_CODE
+			FROM TONGGAE
+	</select>
+	
+	<select id="alioTongGaeDAO.selectAlioTongGaeListTotCnt" parameterClass="searchVO" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM TONGGAE
+			
+	</select>
+	
+
+
+</sqlMap>

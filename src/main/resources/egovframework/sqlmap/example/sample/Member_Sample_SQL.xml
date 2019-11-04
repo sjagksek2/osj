@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Login">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+
+<!-- 로그인 -->
+	<resultMap id="Login" class="egovframework.example.sample.service.login.LoginVO">
+	    <result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+	</resultMap>
+	
+	<insert id="LoginDAO.insertSample">
+		<![CDATA[
+			INSERT INTO MEMBER 
+				( ID, 
+				  PW,
+				  NAME,
+				  EMAIL)
+			VALUES ( #id#
+				  , #pw#
+				  , #name#
+				  , #email# )
+		]]>
+	</insert>
+    
+	
+</sqlMap>

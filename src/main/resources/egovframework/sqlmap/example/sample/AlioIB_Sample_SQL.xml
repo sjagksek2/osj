@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AlioIB">
+    
+    <typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
+    
+    <resultMap id="alioib" class="egovframework.example.sample.service.AlioGongSiVO">
+		<result property="management_code" column="management_code"/>
+		<result property="company_introduction" column="company_introduction"/>
+		<result property="grundungsdatum" column="grundungsdatum"/>
+		<result property="history" column="history"/>
+		<result property="main_function" column="main_function"/>
+	</resultMap>
+	
+    <select id="alioGongSiDAO.selectAlioGongSiList" parameterClass="searchVO" resultClass="egovMap">
+			SELECT 
+					  MANAGEMENT_CODE
+					, COMPANY_INTRODUCTION
+					, GRUNDUNGSDATUM
+					, HISTORY
+					, MAIN_FUNCTION
+			FROM GENERAL_STATUS
+	</select>
+	
+	<select id="alioGongSiDAO.selectAlioGongSiTotCnt" parameterClass="searchVO" resultClass="int">
+
+			SELECT COUNT(*) totcnt
+			FROM GENERAL_STATUS
+	</select>
+</sqlMap>
